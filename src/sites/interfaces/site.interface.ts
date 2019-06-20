@@ -1,7 +1,7 @@
 export interface Site {
   id?: string;
   url: string;
-  name?: string;
+  title?: string;
   description?: string;
   type: string;
 }
