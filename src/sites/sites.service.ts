@@ -10,6 +10,15 @@ export class SitesService {
   constructor(@InjectModel('Site') private readonly siteModel: Model<Site>) {}
 
   async findAll(): Promise<Site[]> {
+    rp('https://www.coursera.com')
+      .then(html => {
+        const length = cheerio('meta', html).length;
+        let $ = cheerio.load(html);
+        console.log(html);
+      })
+      .catch(err => {
+        console.log(err.message);
+      });
     return await this.siteModel.find();
   }
 
@@ -26,12 +35,50 @@ export class SitesService {
       .then(html => {
         const length = cheerio('meta', html).length;
         let $ = cheerio.load(html);
+        let isTitle = false;
+        let isDescription = false;
         for (let i = 0; i < length; i++) {
-          if ($('meta')[i].attribs.property === 'og:title') {
-            site.title = $('meta')[i].attribs.content;
+          if (!isTitle) {
+            if (
+              $('meta')[i].attribs.itemprop === 'name' &&
+              $('meta')[i].attribs.content !== ''
+            ) {
+              site.title = $('meta')[i].attribs.content;
+              isTitle = true;
+            }
+            if (
+              $('meta')[i].attribs.property === 'og:title' &&
+              $('meta')[i].attribs.content !== ''
+            ) {
+              site.title = $('meta')[i].attribs.content;
+              isTitle = true;
+            }
           }
-          if ($('meta')[i].attribs.name === 'description') {
-            site.description = $('meta')[i].attribs.content;
+          if (!isDescription) {
+            if (
+              $('meta')[i].attribs.itemprop === 'description' &&
+              $('meta')[i].attribs.content !== ''
+            ) {
+              site.description = $('meta')[i].attribs.content;
+              isDescription = true;
+            }
+            if (
+              $('meta')[i].attribs.name === 'description' &&
+              $('meta')[i].attribs.content !== ''
+            ) {
+              site.description = $('meta')[i].attribs.content;
+              isDescription = true;
+            }
+            if (
+              $('meta')[i].attribs.property === 'og:description' &&
+              $('meta')[i].attribs.content !== ''
+            ) {
+              site.description = $('meta')[i].attribs.content;
+              isDescription = true;
+            }
+          }
+          if (isDescription && isTitle) {
+            break;
           }
         }
         if ($('title').text() !== '') {
