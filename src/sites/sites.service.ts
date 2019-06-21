@@ -10,15 +10,6 @@ export class SitesService {
   constructor(@InjectModel('Site') private readonly siteModel: Model<Site>) {}
 
   async findAll(): Promise<Site[]> {
-    rp('https://www.coursera.com')
-      .then(html => {
-        const length = cheerio('meta', html).length;
-        let $ = cheerio.load(html);
-        console.log(html);
-      })
-      .catch(err => {
-        console.log(err.message);
-      });
     return await this.siteModel.find();
   }
 
