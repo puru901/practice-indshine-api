@@ -28,6 +28,9 @@ export class SitesService {
         let $ = cheerio.load(html);
         let isTitle = false;
         let isDescription = false;
+        if ($('title').text() !== '') {
+          site.title = $('title').text();
+        }
         for (let i = 0; i < length; i++) {
           if (!isTitle) {
             if (
@@ -72,9 +75,7 @@ export class SitesService {
             break;
           }
         }
-        if ($('title').text() !== '') {
-          site.title = $('title').text();
-        }
+
         const newSite = new this.siteModel(site);
         return newSite.save();
       })

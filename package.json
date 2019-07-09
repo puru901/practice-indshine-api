@@ -20,6 +20,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
+    "@ionic/app-scripts": "^3.1.6",
     "@nestjs/common": "^6.0.0",
     "@nestjs/core": "^6.0.0",
     "@nestjs/mongoose": "^6.1.2",
@@ -47,7 +48,8 @@
     "tsconfig-paths": "3.8.0",
     "tslint": "5.16.0",
     "typescript": "3.4.3",
-    "wait-on": "^3.2.0"
+    "wait-on": "^3.2.0",
+    "ws": "3.3.2"
   },
   "jest": {
     "moduleFileExtensions": [
