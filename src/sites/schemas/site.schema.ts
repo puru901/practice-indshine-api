@@ -5,4 +5,6 @@ export const SiteSchema = new mongoose.Schema({
   url: String,
   description: String,
   type: String,
+  createdBy: String,
+  image: String,
 });

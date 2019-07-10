@@ -4,4 +4,6 @@ export interface Site {
   title?: string;
   description?: string;
   type: string;
+  createdBy: string;
+  image?: string;
 }

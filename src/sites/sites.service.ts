@@ -28,6 +28,7 @@ export class SitesService {
         let $ = cheerio.load(html);
         let isTitle = false;
         let isDescription = false;
+        let isImage = false;
         if ($('title').text() !== '') {
           site.title = $('title').text();
         }
@@ -71,7 +72,30 @@ export class SitesService {
               isDescription = true;
             }
           }
-          if (isDescription && isTitle) {
+          if (!isImage) {
+            if (
+              $('meta')[i].attribs.itemprop === 'image' &&
+              $('meta')[i].attribs.content !== ''
+            ) {
+              site.image = $('meta')[i].attribs.content;
+              isImage = true;
+            }
+            if (
+              $('meta')[i].attribs.name === 'image' &&
+              $('meta')[i].attribs.content !== ''
+            ) {
+              site.image = $('meta')[i].attribs.content;
+              isImage = true;
+            }
+            if (
+              $('meta')[i].attribs.property === 'og:image' &&
+              $('meta')[i].attribs.content !== ''
+            ) {
+              site.image = $('meta')[i].attribs.content;
+              isImage = true;
+            }
+          }
+          if (isImage && isTitle) {
             break;
           }
         }
