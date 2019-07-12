@@ -17,10 +17,6 @@ export class SitesService {
     return await this.siteModel.findOne({ _id: id });
   }
 
-  async findByType(type: string): Promise<Site> {
-    return await this.siteModel.find({ type: type });
-  }
-
   async create(site: Site): Promise<Site> {
     return await rp(site.url)
       .then(html => {

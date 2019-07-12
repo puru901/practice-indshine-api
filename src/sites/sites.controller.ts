@@ -20,14 +20,9 @@ export class SitesController {
     return this.sitesService.findAll();
   }
 
-  @Get('/id/:id')
+  @Get(':id')
   findOne(@Param('id') id): Promise<Site> {
     return this.sitesService.findOne(id);
-  }
-
-  @Get('/type/:type')
-  findByType(@Param('type') type): Promise<Site> {
-    return this.sitesService.findByType(type);
   }
 
   @Post()

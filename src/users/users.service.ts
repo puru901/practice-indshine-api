@@ -12,11 +12,11 @@ export class UsersService {
   }
 
   async findOne(id: string): Promise<User> {
-    return await this.userModel.findOne({ _id: id });
-  }
-
-  async findByEmail(email: string): Promise<User> {
-    return await this.userModel.findOne({ email: email });
+    if (id.includes('@')) {
+      return await this.userModel.findOne({ email: id });
+    } else {
+      return await this.userModel.findOne({ _id: id });
+    }
   }
 
   async create(user: User): Promise<User> {
